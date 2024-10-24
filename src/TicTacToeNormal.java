@@ -1,53 +1,90 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
-public class TicTacToeNormal extends Game{
+public class TicTacToeNormal extends Game {
 
-    public TicTacToeNormal(int size){
+    public TicTacToeNormal(int size, int typeGame) {
         super(size);
         this.player1 = new Player(Symbol.X);
         this.player2 = new Player(Symbol.O);
         this.currentPlayer = player1;
+        this.typeGame = typeGame; // added the type of the game so we can change between games
+    }
+
+    public TicTacToeNormal() {
+    super();
     }
 
     @Override
     boolean isGameOver() {
         // Comprobar si hay un ganador
         if (isWinner()) {
-            System.out.println("Player " + currentPlayer.getSymbol() + " is Winner.");
-            return true;
+            if (getTypeGame() == 1) {
+                System.out.println("Player " + currentPlayer.getSymbol() + " is Winner.");
+                if(currentPlayer == player1){
+                    player1.setGamesWonX();  // adding a counter to X
+                }
+                return true;
+
+            } else {
+                switchPlayer();
+                System.out.println("Player " + currentPlayer.getSymbol() + " is Winner.");
+                if(currentPlayer == player2){
+                    player2.setGamesWonO(); //Adding a counter to O
+                }
+                return true;
+            }
         }
 
         // Comprobar si el tablero está lleno
-        if (isBoardFull()){
+        if (isBoardFull()) {
             System.out.println("It's a tie!");
             return true;
         }
         return false;
     }
+
+    //Creating the class for score
+    @Override
+    String gamesScore() { // I opted to create a method with array of int because I cannot return 2 values, so that why i did it that way... finally I changed to string.
+//        player1.getGamesWon();
+//        String message = (player1.gamesWonX > player2.gamesWonO) ? "The winner is: X" : (player1.gamesWonX < player2.gamesWonO) ? "The winner is: O" : "Its a draw!";
+//        return ("Player X: " + player1.gamesWonX + "\n" + " Player O: " + player2.gamesWonO + "\n" + message);
+       // return new int[]{Integer.parseInt(player1.getGamesWon()), Integer.parseInt(player2.getGamesWon())};
+
+        return ("Working on it...\n Please choose another option");
+    }
+
     @Override
     boolean nextTurn() {
         int x, y;
+        boolean ejecutado = false;
         Scanner input = new Scanner(System.in);
-        board.drawBoard();
+        if(!ejecutado){
+            board.drawBoard();  // commented this line because it is duplicating the board.
+            ejecutado = true; // instead of commenting i created a conditional just to appear once
+        }
         System.out.println("Player " + currentPlayer.getSymbol() + " turn, enter the row and column: ");
         String rowInput = input.next();
         String colInput = input.next();
 
-        if(isNumeric(rowInput) && isNumeric(colInput)){
-            x = Integer.parseInt(rowInput)-1;
-            y= Integer.parseInt(colInput)-1;
+        if (isNumeric(rowInput) && isNumeric(colInput)) {
+            x = Integer.parseInt(rowInput) - 1;
+            y = Integer.parseInt(colInput) - 1;
 
-            if(board.validateMove(x, y)){
+            if (board.validateMove(x, y)) {
                 board.updateBoard(x, y, currentPlayer.getSymbol());
                 board.drawBoard();
-                if(isGameOver()){
+                if (isGameOver()) {
+                    //Created a new game to start over and to send the player to the main menu
+                    Tictactoe newGame = new Tictactoe();
                     return true;
                 }
                 switchPlayer();
-            }else {
+            } else {
                 System.out.println("Invalid move, try again.");
             }
-        }else {
+        } else {
             System.out.println("Invalid input, please enter numbers only for row and column.");
         }
         return false;
@@ -57,7 +94,7 @@ public class TicTacToeNormal extends Game{
         return number.matches("\\d");
     }
 
-    private void switchPlayer(){
+    private void switchPlayer() {
         currentPlayer = (currentPlayer == player1) ? player2 : player1;
     }
 
@@ -123,4 +160,10 @@ public class TicTacToeNormal extends Game{
         }
         return true;
     }
+
+    // Created the getter for the typeGame
+    public int getTypeGame() {
+        return this.typeGame;
+    }
+
 }
