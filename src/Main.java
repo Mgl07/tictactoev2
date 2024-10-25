@@ -12,9 +12,10 @@ public class Main {
         System.out.println("Choose the type game \n1.-Normal \n2.-Inverted");
         int type = scanner.nextInt();
 
-        TicTacToeInverted inverted  = new TicTacToeInverted(size);
-        TicTacToeNormal normal= new TicTacToeNormal(size);
+       // TicTacToeInverted inverted  = new TicTacToeInverted(size, type);
+        TicTacToeNormal normal= new TicTacToeNormal(size, type);
+        normal.play();
 
-        (type == 1 ? normal : inverted).play();
+       //(type == 1 ? normal : normal ).play();
     }
 }
