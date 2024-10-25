@@ -2,28 +2,42 @@ import java.util.Scanner;
 
 public class TicTacToeNormal extends Game{
 
-    public TicTacToeNormal(int size){
-        super(size);
+    public TicTacToeNormal(int size, int type){
+        super(size, type);
         this.player1 = new Player(Symbol.X);
         this.player2 = new Player(Symbol.O);
         this.currentPlayer = player1;
+        
     }
 
     @Override
     boolean isGameOver() {
         // Comprobar si hay un ganador
-        if (isWinner()) {
-            System.out.println("Player " + currentPlayer.getSymbol() + " is Winner.");
-            return true;
-        }
+    		 if (this.type == 1 && isWinner()) {
+    	            System.out.println("Player " + currentPlayer.getSymbol() + " is Winner.");
+    	            return true;
+    	        }
+    		 
+    		 if (this.type == 2 && isWinner()) {
+ 	            
+ 	           if( currentPlayer.getSymbol().getSymbol() == 'X'){
+ 	        	    System.out.println("Player " + Symbol.O.getSymbol() + " wins!");
+ 	        	}else {
+ 	        		System.out.print("Player " + Symbol.X.getSymbol() + " wins!");
+ 	        	}
+ 	           return true;
+ 	        }
+    	       
 
-        // Comprobar si el tablero está lleno
-        if (isBoardFull()){
-            System.out.println("It's a tie!");
-            return true;
-        }
+    	        // Comprobar si el tablero está lleno
+    	        if (isBoardFull()){
+    	            System.out.println("It's a tie!");
+    	            return true;
+    	        } 	
         return false;
     }
+    
+    
     @Override
     boolean nextTurn() {
         int x, y;
@@ -123,4 +137,7 @@ public class TicTacToeNormal extends Game{
         }
         return true;
     }
+    
+    //////////////////////////////////////////////////////////////////// changes
+    
 }
