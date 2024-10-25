@@ -14,7 +14,12 @@ public class TicTacToeInverted extends Game{
     boolean isGameOver() {
         // Comprobar si hay un ganador
         if (isLoser()) {
-            System.out.println("Player " + currentPlayer.getSymbol() + " loses!");
+            if( currentPlayer.getSymbol().getSymbol() == 'X'){
+                System.out.println("Player " + Symbol.O.getSymbol() + " wins!");
+
+            }else{
+                System.out.println("Player " + Symbol.X.getSymbol() + " wins!");
+            }
             return true;
         }
         // Comprobar si el tablero está lleno
